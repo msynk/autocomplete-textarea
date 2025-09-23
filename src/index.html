@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCompleteTextarea</title>
+    <title>GhostTextarea</title>
 </head>
+
 <body>
-    <script src="./autocomplete-textarea.js"></script>
-    <autocomplete-textarea ghosttext="This is ghost text" placeholder="Type here..." value="this is value"></autocomplete-textarea>
+    <script src="./ghost-textarea.js"></script>
+    <ghost-textarea ghost="This is ghost text" placeholder="Type here..." value="this is value" oninput="input(event)"></ghost-textarea>
+    <script>
+        function input(e) {
+            console.log('input:', `[${e.target.value}]`, e);
+        }
+        // const g = document.querySelector('ghost-textarea');
+        // g.addEventListener('input', (e) => {
+        //    console.log('input:', `[${g.value}]`, e); 
+        // });
+    </script>
 </body>
+
 </html>
