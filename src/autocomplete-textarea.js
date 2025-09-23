@@ -1,19 +1,19 @@
 (function () {
-    class GhostTextarea extends HTMLElement {
+    class AutocompleteTextarea extends HTMLElement {
         static get observedAttributes() {
             return ["ghosttext", "placeholder"];
         }
 
-        private _ghostText: string | null | undefined;
-        private _overlay: HTMLDivElement | null | undefined;
-        private _textarea: HTMLTextAreaElement | null | undefined;
+        _ghostText = null;
+        _overlay = null;
+        _textarea = null;
 
         constructor() {
             super();
             this.attachShadow({ mode: "open" });
             this.shadowRoot?.appendChild(template.content.cloneNode(true));
 
-            this._textarea = this.shadowRoot?.querySelector("textarea");
+            this._textarea = this.shadowRoot?.querySelector(".textarea");
             this._overlay = this.shadowRoot?.querySelector(".overlay");
 
             this._ghostText = "";
@@ -40,7 +40,7 @@
             this.updateOverlay();
         }
 
-        attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+        attributeChangedCallback(name, oldValue, newValue) {
             if (name === "ghosttext") {
                 this._ghostText = newValue || "";
                 this.updateOverlay();
@@ -49,11 +49,11 @@
             }
         }
 
-        set ghostText(value: string) {
+        set ghostText(value) {
             this.setAttribute("ghosttext", value);
         }
 
-        get ghostText(): string | null | undefined {
+        get ghostText() {
             return this._ghostText;
         }
 
@@ -69,7 +69,7 @@
             this._overlay.innerHTML = this.escapeHtml(value) + this.escapeHtml(this._ghostText);
         }
 
-        escapeHtml(text: string | null | undefined): string {
+        escapeHtml(text) {
             if (!text) return '';
 
             return text.replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] || ''));
@@ -89,15 +89,13 @@
 
     .overlay,
     .textarea {
+        all: unset;
+        padding: 0;
         width: 100%;
-        padding: 8px;
-        height: 150px;
         font-size: 16px;
-        line-height: 1.4;
-        word-wrap: break-word;
+        line-height: 1.5;
         white-space: pre-wrap;
         box-sizing: border-box;
-        font-family: monospace;
     }
 
     .overlay {
@@ -115,6 +113,7 @@
     .textarea {
         z-index: 1;
         border: none;
+        resize: both;
         position: relative;
         outline: 1px solid;
         background: transparent;
@@ -123,11 +122,11 @@
 
   <div class="wrapper">
     <div class="overlay"></div>
-    <textarea></textarea>
+    <textarea class="textarea"></textarea>
   </div>
 `;
 
-    customElements.define("ghost-textarea", GhostTextarea);
+    customElements.define("autocomplete-textarea", AutocompleteTextarea);
 
-    (window as any).GhostTextarea = GhostTextarea;
+    window.AutocompleteTextarea = AutocompleteTextarea;
 }())
