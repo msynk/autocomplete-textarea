@@ -9,15 +9,18 @@
 
 <body>
     <script src="./ghost-textarea.js"></script>
-    <ghost-textarea ghost="This is ghost text" placeholder="Type here..." value="this is value" oninput="input(event)"></ghost-textarea>
+    <ghost-textarea ghost="This is ghost text" placeholder="Type here..." value="this is value"></ghost-textarea>
+    <hr />
     <script>
-        function input(e) {
-            console.log('input:', `[${e.target.value}]`, e);
-        }
-        // const g = document.querySelector('ghost-textarea');
-        // g.addEventListener('input', (e) => {
-        //    console.log('input:', `[${g.value}]`, e); 
-        // });
+        const gta = document.querySelector('ghost-textarea');
+
+        gta.addEventListener('input', (e) => {
+           console.log('input:', `[${gta.value}]`, e);
+        });
+
+        gta.addEventListener('blur', (e) => {
+           console.log('blur:', `[${gta.value}]`, e);
+        });
     </script>
 </body>
 

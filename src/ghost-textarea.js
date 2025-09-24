@@ -82,7 +82,7 @@
             ['input', 'change', 'focus', 'blur', 'keydown', 'keyup', 'click'].forEach(evt =>
                 this._textarea.addEventListener(evt, e => {
                     this.updateOverlay();
-                    this.dispatchEvent(new Event(e.type, { bubbles: true, composed: true }));
+                    this.dispatchEvent(new Event(e));
                 })
             );
 
