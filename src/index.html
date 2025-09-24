@@ -9,17 +9,38 @@
 
 <body>
     <script src="./ghost-textarea.js"></script>
-    <ghost-textarea ghost="This is ghost text" placeholder="Type here..." value="this is value"></ghost-textarea>
+    <ghost-textarea placeholder="Type here..." value="this is value"></ghost-textarea>
     <hr />
     <script>
+        const suggestions = [
+            'application form',
+            'banana smoothie',
+            'car repair manual',
+            'dog training guide'
+        ];
+
         const gta = document.querySelector('ghost-textarea');
 
         gta.addEventListener('input', (e) => {
-           console.log('input:', `[${gta.value}]`, e);
+            console.log('input:', `[${gta.value}]`, e);
+
+            const value = gta.value;
+            if (!value) {
+                return gta.ghost = '';
+            }
+
+            const lastWord = value.split(/\s+/).pop();
+            if (!lastWord) {
+                return gta.ghost = '';
+            }
+
+            const match = suggestions.find(item => item.toLowerCase().startsWith(lastWord.toLowerCase()));
+
+            gta.ghost = match ? match.slice(lastWord.length) : '';
         });
 
         gta.addEventListener('blur', (e) => {
-           console.log('blur:', `[${gta.value}]`, e);
+            console.log('blur:', `[${gta.value}]`, e);
         });
     </script>
 </body>

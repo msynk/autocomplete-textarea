@@ -16,6 +16,7 @@
         width: 100%;
         font-size: 16px;
         line-height: 1.5;
+        word-break: break-all;
         white-space: pre-wrap;
         box-sizing: border-box;
     }
@@ -90,7 +91,21 @@
                 if (!this._overlay || !this._textarea) return;
                 this._overlay.scrollTop = this._textarea.scrollTop;
                 this._overlay.scrollLeft = this._textarea.scrollLeft;
-            })
+            });
+
+            this._textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    if (!this.value) return;
+
+                    if (this._ghost) {
+                        e.preventDefault();
+                        this.value = this.value + this._ghost;
+                        this.updateOverlay();
+                        this.ghost = '';
+                        this._textarea.scrollTop = this._textarea.scrollHeight;
+                    }
+                }
+            });
 
             this.updateOverlay();
         }
