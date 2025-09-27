@@ -155,6 +155,12 @@
                 return this._overlay.innerHTML = '';
             }
 
+            const hasVerticalScrollbar = this._textarea.scrollHeight > this._textarea.clientHeight;
+            const hasHorizontalScrollbar = this._textarea.scrollWidth > this._textarea.clientWidth;
+
+            this._overlay.style.overflowY = hasVerticalScrollbar ? 'unset' : 'hidden';
+            this._overlay.style.overflowX = hasHorizontalScrollbar ? 'unset' : 'hidden';
+
             this._overlay.innerHTML = escapeHtml(value) + escapeHtml(this._ghost);
         }
     }
